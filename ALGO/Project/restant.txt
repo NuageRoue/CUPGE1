@@ -1,0 +1,11 @@
+
+projet 1 :
+Docstring au propre, doctests manquant
+
+projet 2 :
+docstring et doctests manquants
+
+interrogation :
+boucle try-except ?
+docstring sur la 2eme partie ?
+qu'est-ce-que les profs entendent par "tests" ? execution des doctests, code precis...

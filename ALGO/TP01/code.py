@@ -332,7 +332,41 @@ print('\n\n\n')
 
 #ex15
 
+def inGrid(c):
+	return (ord(c[0]) > ord('H') or ord(c[0]) < ord('A')) or (ord(c[1]) > ord('1') or ord(c[1] > ord('9')))
 
+def deplacement_possible(c1, c2):
+	if not inGrid(c1) or not inGrid(c2):
+		return False
+	if c2 == chr(ord(c1[0])+1) + chr(ord(c1[1]) + 2):
+		return True
+	
+	if c2 == chr(ord(c1[0])+1) + chr(ord(c1[1]) - 2):
+		return True
+
+	if c2 == chr(ord(c1[0])-1) + chr(ord(c1[1]) + 2):
+		return True
+
+	if c2 == chr(ord(c1[0])-1) + chr(ord(c1[1]) - 2):
+		return True
+
+	if c2 == chr(ord(c1[0])+2) + chr(ord(c1[1]) + 1):
+		return True
+
+	if c2 == chr(ord(c1[0])+2) + chr(ord(c1[1]) - 1):
+		return True
+
+	if c2 == chr(ord(c1[0])-2) + chr(ord(c1[1]) + 1):
+		return True
+	
+	if c2 == chr(ord(c1[0])-2) + chr(ord(c1[1]) - 1):
+		return True
+	
+	return False
+
+
+	
+print(deplacement_possible('F4', 'G2'))
 
 #ex16
 
@@ -360,16 +394,66 @@ def penta(n):
 def hexa(n):
 	return penta(n) + tri(n - 1)
 
+# H(n) = T(2n - 1)
+# P(n) = T(3n-1)/3
 
-triTab = [tri(n) for n in range(1, 500000)]
-print('triTab terminée')
-pentaTab = [penta(n) for n in range(1,5000000)]
-print('pentaTab terminée')
-hexaTab = [hexa(n) for n in range(1, 5000000)]
-print('hexaTab terminée')
+# pour chaque nombre triangulaire de rang de la forme 3n-1, on vérifie si le quotient est un nombre triangulaire impair
 
-for i in triTab:
-	for j in pentaTab:
-		for k in hexaTab:
-			if i == j and i == k:
-				print(i)
+def isTri(n):
+	i = 1
+	while tri(i) <= n:
+		if tri(i) == n :
+			print('i', i)
+			return i
+		i += 1
+	return -1
+
+def isHexa(n):
+	i = 1
+	while hexa(i) <= n:
+		if hexa(i) == n :
+			return True
+		i += 1
+	return False
+
+def isPenta(n):
+	i = 1
+	while penta(i) <= n:
+		if penta(i) == n :
+			return True
+		i += 1
+	return False
+
+
+i = 1
+notFound = True
+while notFound:
+	i += 2#2
+	rang = isTri(tri(3 * i - 1) // 3)
+	print(rang)
+	if rang > 0 and rang % 2 == 1 :
+		print(tri(rang))
+		notFound = False
+
+
+#exercice 18:
+
+def nbSquare(L, C):
+	return ((L*(L + 1)) * (C*(C + 1))) / 4
+
+def ABS(x):
+	return x * ((x > 0)-(x < 0))
+
+
+def nearestSquaredGrid(nb_square):
+	C = 1
+	while(nbSquare(C, C) < nb_square):
+		C += 1
+	if ABS(nbSquare(C - 1, C - 1) - nb_square) < ABS(nbSquare(C, C) - nb_square):
+		print('on a une grille de dimension {}x{}'.format(C - 1, C - 1))
+		return (C - 1)
+	print('on a une grid de dimension {}x{}'.format(C, C))
+	return (C + 1)
+
+print('\n\n\n')
+#print(i)
